@@ -51,6 +51,7 @@ sandbox before you depend on them.
 | Let an agent work with ServiceNow tickets or CMDB | `snow-cli` |
 | Let an agent read or send mail | `outlook-cli` |
 | Let an agent talk in Teams | `teams-cli` |
+| Give agents instructions for using a tool | [skills/](../skills/README.md) |
 | Add a rule for your agents so they find these tools | [agent-discovery.md](agent-discovery.md) |
 
 ## Where changes go

@@ -5,6 +5,7 @@
 !/.github/
 !/docs/
 !/user-docs/
+!/skills/
 
 # OS / editor noise
 .DS_Store

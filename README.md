@@ -81,6 +81,21 @@ These help you adopt and use the set as a whole. Each repository keeps its own `
 | [user-docs/getting-started.md](user-docs/getting-started.md) | Clone the set, read it in the right order, find the right repository for a task |
 | [user-docs/agent-discovery.md](user-docs/agent-discovery.md) | How an agent finds and uses elements of the set, and how to keep a rule current |
 
+## Skills for agents
+
+`skills/` is the one place an agent finds and adopts instructions for the tools in this set: one skill
+document per repository, named `<repo-name>.md`, plus a shared one for the conventions all three CLIs
+follow. See [skills/README.md](skills/README.md) for the index and how to adopt them. Every tool is
+still planned, so each skill says so and tells the agent to check the tool is installed first.
+
+| Skill | For |
+|---|---|
+| [skills/snow-cli.md](skills/snow-cli.md) | ServiceNow work items and CMDB lookups with `snow` |
+| [skills/outlook-cli.md](skills/outlook-cli.md) | Mail as the agent's own mailbox with `outlook` |
+| [skills/teams-cli.md](skills/teams-cli.md) | Teams messages as the agent's own user with `teams` |
+| [skills/agent-cli-core.md](skills/agent-cli-core.md) | Output envelope, exit codes, untrusted content, policy shared by the three CLIs |
+| [skills/agent-okta-d.md](skills/agent-okta-d.md) | What agents must know and never do on a host running the credential daemon |
+
 ## Discovery example: a rule for agents
 
 An agent that needs to find or use something from this set can be given a rule like the one below. Add
@@ -98,10 +113,12 @@ what exists; discover it.
   not on PATH is not installed. Do not install, build or reimplement it yourself. Check
   `gh release list -R stainedhead/<repo>` to see whether a release exists, and tell the user what is
   missing.
-- **Read before use.** For a tool you intend to use, read `INTENT.md` and `user-docs/` in its repository
-  (`gh api repos/stainedhead/<repo>/contents/<path> --jq .content | base64 -d`). The PRD is the
-  detailed source of truth. Several PRD claims are marked unconfirmed (⚠️); treat them as
-  unverified.
+- **Adopt the skill first.** Each tool has a skill document in the root repository's `skills/` folder
+  (`skills/<repo>.md`; also read `skills/agent-cli-core.md` for `snow`, `outlook` and `teams`, and
+  `skills/agent-okta-d.md` on a host running the daemon). Fetch it with
+  `gh api repos/stainedhead/agentic-teams/contents/skills/<repo>.md --jq .content | base64 -d`. Then, if
+  you need more, read `INTENT.md` and `user-docs/` in the tool's repository. The PRD is the detailed
+  source of truth, and several PRD claims are marked unconfirmed (⚠️); treat them as unverified.
 - **Which repository.** ServiceNow work: `snow-cli`. Email: `outlook-cli`. Teams chat: `teams-cli`.
   Shared CLI library code (policy, output envelope, audit): `agent-cli-core`. Credentials and Okta: `agent-okta-d`. Runtime images and deployment recipes:
   `agentic-team-w-paperclip`. AWS, GitHub and git use the stock `aws`, `gh` and `git`.
@@ -138,5 +155,5 @@ there.
 
 ## What is committed here
 
-Only `README.md`, `INTENT.md`, `AGENTS.md`, `CLAUDE.md`, `.gitignore`, `.github/`, `docs/` and
-`user-docs/`.
+Only `README.md`, `INTENT.md`, `AGENTS.md`, `CLAUDE.md`, `.gitignore`, `.github/`, `docs/`,
+`user-docs/` and `skills/`.

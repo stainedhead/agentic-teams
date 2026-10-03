@@ -9,7 +9,7 @@ source code, no build and no tests. See [INTENT.md](INTENT.md) for why it exists
 
 Each sub-repository is a **separate git repository** that lives in a sub-directory of this one when
 cloned. They are **not** tracked here: `.gitignore` ignores every top-level directory except an
-explicit allowlist (`.github/`, `docs/`, `user-docs/`). Do not add submodules, subtrees or copies.
+explicit allowlist (`.github/`, `docs/`, `user-docs/`, `skills/`). Do not add submodules, subtrees or copies.
 
 ## Sub-repositories
 Sub-directory names match the repository names. All five remotes are public. Clone each one you need next to this file:
@@ -43,7 +43,7 @@ agentic-team-w-paperclip images ──run on the agent host──► the daemon 
 - **Commit sub-repository changes in the sub-repository**, never in this root. A change to
   `snow-cli/` is committed and pushed from inside `snow-cli/`.
 - **Only root-level material is committed here:** `README.md`, `INTENT.md`, `AGENTS.md`, `CLAUDE.md`,
-  `.gitignore`, `.github/` and anything under `docs/` or `user-docs/`. If you add a new top-level directory that
+  `.gitignore`, `.github/` and anything under `docs/`, `user-docs/` or `skills/`. If you add a new top-level directory that
   belongs to this repo, add it to the allowlist in `.gitignore`.
 - **Before committing, check nothing from a sub-repo is staged:** `git ls-files -s` must show no mode
   `160000` entries and no sub-repository paths.
@@ -57,6 +57,12 @@ agentic-team-w-paperclip images ──run on the agent host──► the daemon 
 - **Keep the discovery rule working.** The sample rule in `README.md` and `user-docs/agent-discovery.md`
   depends on the table above. When a repository is added, split or changes status, update the table, the
   README table and, if the repository mapping changed, the sample rule in the same change.
+- **`skills/` rule.** `skills/` holds the agent skill documents, one file per repository named
+  `<repo-name>.md` (plus the shared `agent-cli-core.md`). It is the only home for them: the tool
+  repositories require it (SKILL-1..7 in each PRD) and do not keep a copy. Each skill must carry the
+  planned/not-installed banner until a release exists, describe only commands the repository's PRD
+  defines, and name the version it applies to. Update the skill in the same change cycle as any change
+  to a tool's commands, exit codes or forbidden actions.
 - Never put credentials, tokens or tenant identifiers in this repository.
 
 ## Current state

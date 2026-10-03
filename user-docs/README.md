@@ -17,6 +17,11 @@ for a single tool lives in that tool's own `user-docs/`:
 | [getting-started.md](getting-started.md) | Clone the set, read it in the right order, find the right repository for a task |
 | [agent-discovery.md](agent-discovery.md) | How an agent finds and uses elements of the set, and how to keep a rule current |
 
+## Skills for agents
+
+Instructions that agents adopt live in [../skills/](../skills/README.md), not here. See
+[agent-discovery.md](agent-discovery.md) for how an agent finds them.
+
 ## What belongs here
 
 Only material that helps someone adopt, configure and use the set: orientation, install order, how
