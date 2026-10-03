@@ -1,0 +1,12 @@
+# This is a documentation-only root repo. Every sub-directory is an independent
+# repository (or a planned one) and must never be tracked here. Ignore all
+# top-level directories, then allowlist the ones that belong to this repo.
+/*/
+!/.github/
+!/docs/
+
+# OS / editor noise
+.DS_Store
+*.swp
+.idea/
+.vscode/
