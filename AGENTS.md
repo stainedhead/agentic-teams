@@ -12,16 +12,16 @@ cloned. They are **not** tracked here: `.gitignore` ignores every top-level dire
 explicit allowlist (`.github/`, `docs/`). Do not add submodules, subtrees or copies.
 
 ## Sub-repositories
-Sub-directory names match the repository names. Clone each one you need next to this file:
+Sub-directory names match the repository names. All five remotes are public. Clone each one you need next to this file:
 `git clone https://github.com/stainedhead/<name>.git`.
 
 | Directory | Language / kind | Purpose | Remote | Status |
 |---|---|---|---|---|
 | `agentic-team-w-paperclip/` | Dockerfiles, shell, CI, docs | Baseline container images (Hermes, OMP, OpenCode CLI, optional Paperclip) and the docs and templates a swarm owner configures them with | `github.com/stainedhead/agentic-team-w-paperclip` | Exists |
-| `agent-okta-d/` | Go | Credential daemon: Okta OIDC identity root, serves short-lived credentials to stock tools and the CLIs | none yet | Planned, PRD only (`agent-okta-d-PRD.md`) |
-| `snow-cli/` | Go | `snow`: ServiceNow CLI (work items, CMDB lookups); defines the shared CLI core | none yet | Planned, PRD only (`snow-cli-PRD.md`) |
-| `outlook-cli/` | Go | `outlook`: mail as the agent's own Entra user via Graph | none yet | Planned, PRD only (`outlook-cli-PRD.md`) |
-| `teams-cli/` | Go | `teams`: Teams messaging as the agent's own Entra user via Graph | none yet | Planned, PRD only (`teams-cli-PRD.md`) |
+| `agent-okta-d/` | Go | Credential daemon: Okta OIDC identity root, serves short-lived credentials to stock tools and the CLIs | `github.com/stainedhead/agent-okta-d` | Exists: PRD and scaffold, no code yet |
+| `snow-cli/` | Go | `snow`: ServiceNow CLI (work items, CMDB lookups); defines the shared CLI core | `github.com/stainedhead/snow-cli` | Exists: PRD and scaffold, no code yet |
+| `outlook-cli/` | Go | `outlook`: mail as the agent's own Entra user via Graph | `github.com/stainedhead/outlook-cli` | Exists: PRD and scaffold, no code yet |
+| `teams-cli/` | Go | `teams`: Teams messaging as the agent's own Entra user via Graph | `github.com/stainedhead/teams-cli` | Exists: PRD and scaffold, no code yet |
 | not yet located | Go module | `agent-cli-core`: shared auth/policy/output/audit/httpx packages that `snow`, `outlook` and `teams` are built from (defined in `snow-cli-PRD.md` §5) | none yet | Planned; where it lives (own repo or inside `snow-cli`) is an open question |
 
 When a "Planned" repository is created, update this table and the README table in the same change.
@@ -53,10 +53,7 @@ agentic-team-w-paperclip images ──run on the agent host──► the daemon 
   and status, not a URL.
 - Never put credentials, tokens or tenant identifiers in this repository.
 
-## Backup caveat for planned repositories
-Until a planned repository has its own git repo and remote, its files (currently the PRDs) exist only
-on local disk and are not backed up by this repository.
-
 ## Current state
-Five items are in the set: one existing repository, four planned Go repositories, plus the shared
-`agent-cli-core` module whose location is undecided. The root repository contains documentation only.
+Five repositories exist: `agentic-team-w-paperclip` (built) and four Go repositories that hold a PRD
+and a scaffold but no code yet. The shared `agent-cli-core` module is not created and its location is
+undecided. The root repository contains documentation only.
