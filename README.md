@@ -19,9 +19,9 @@ contributors follow here, and [user-docs/](user-docs/README.md) for adopting the
 | [snow-cli](https://github.com/stainedhead/snow-cli) | Go | `snow`: task-shaped ServiceNow CLI (work items, CMDB lookups) for agents and humans. Its PRD also defines the shared CLI core | PRD and scaffold; no code, no release | [Intent](https://github.com/stainedhead/snow-cli/blob/main/INTENT.md) · [PRD](https://github.com/stainedhead/snow-cli/blob/main/snow-cli-PRD.md) · [User docs](https://github.com/stainedhead/snow-cli/tree/main/user-docs) |
 | [outlook-cli](https://github.com/stainedhead/outlook-cli) | Go | `outlook`: read, triage and send mail as the agent's own Entra user, with inbound mail treated as untrusted and outbound mail controlled | PRD and scaffold; no code, no release | [Intent](https://github.com/stainedhead/outlook-cli/blob/main/INTENT.md) · [PRD](https://github.com/stainedhead/outlook-cli/blob/main/outlook-cli-PRD.md) · [User docs](https://github.com/stainedhead/outlook-cli/tree/main/user-docs) |
 | [teams-cli](https://github.com/stainedhead/teams-cli) | Go | `teams`: post and read Teams messages as the agent's own Entra user, polling, no hosted relay | PRD and scaffold; no code, no release | [Intent](https://github.com/stainedhead/teams-cli/blob/main/INTENT.md) · [PRD](https://github.com/stainedhead/teams-cli/blob/main/teams-cli-PRD.md) · [User docs](https://github.com/stainedhead/teams-cli/tree/main/user-docs) |
-| `agent-cli-core` | Go module | Shared auth, policy, output, audit and HTTP packages that `snow`, `outlook` and `teams` build from (defined in the `snow-cli` PRD, §5) | Not created; its home (own repo or inside `snow-cli`) is undecided | |
+| [agent-cli-core](https://github.com/stainedhead/agent-cli-core) | Go library | Shared code the `snow`, `outlook` and `teams` CLIs build from: daemon-token auth (wrapping the daemon's `pkg/client`), client-side policy, output envelope with untrusted-content marking, audit log and HTTP client. Originated in the `snow-cli` PRD, now its own repository | PRD and scaffold; no code, no release | [Intent](https://github.com/stainedhead/agent-cli-core/blob/main/INTENT.md) · [PRD](https://github.com/stainedhead/agent-cli-core/blob/main/agent-cli-core-PRD.md) · [User docs](https://github.com/stainedhead/agent-cli-core/tree/main/user-docs) |
 
-The four Go repositories currently hold a draft PRD and a scaffold, and have published no releases. Do
+The five Go repositories currently hold a draft PRD and a scaffold, and have published no releases. Do
 not assume any of their commands exist on a host until a release does.
 
 ## How the pieces fit
@@ -103,7 +103,7 @@ what exists; discover it.
   detailed source of truth. Several PRD claims are marked unconfirmed (⚠️); treat them as
   unverified.
 - **Which repository.** ServiceNow work: `snow-cli`. Email: `outlook-cli`. Teams chat: `teams-cli`.
-  Credentials and Okta: `agent-okta-d`. Runtime images and deployment recipes:
+  Shared CLI library code (policy, output envelope, audit): `agent-cli-core`. Credentials and Okta: `agent-okta-d`. Runtime images and deployment recipes:
   `agentic-team-w-paperclip`. AWS, GitHub and git use the stock `aws`, `gh` and `git`.
 - **Credentials are not yours to handle.** Never ask for, read, print or store a token, key or
   password. Use the tools as installed; credentials arrive through `agent-okta-d`. If a command reports
@@ -130,7 +130,7 @@ repository's `.gitignore` already ignores:
 git clone https://github.com/stainedhead/agentic-teams.git
 cd agentic-teams
 git clone https://github.com/stainedhead/agentic-team-w-paperclip.git
-git clone https://github.com/stainedhead/agent-okta-d.git   # likewise snow-cli, outlook-cli, teams-cli
+git clone https://github.com/stainedhead/agent-okta-d.git   # likewise agent-cli-core, snow-cli, outlook-cli, teams-cli
 ```
 
 Each repository carries its own README, history and CI. Work inside the one you are changing and commit

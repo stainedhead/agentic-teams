@@ -15,7 +15,8 @@ otherwise track the repositories it describes.
 |---|---|
 | `agentic-team-w-paperclip` | Baseline container images and docs for an agent swarm: Hermes, OMP and OpenCode harnesses, plus Paperclip as the orchestration and collaboration plane. |
 | `agent-okta-d` | A credential daemon beside each agent host. Okta OIDC is the identity root. It serves short-lived credentials to stock tools (`aws`, `git`, `gh`) and to the custom CLIs, and the agent never reads a long-lived secret. |
-| `snow-cli` | `snow`: task-shaped ServiceNow CLI (work items, CMDB lookups) for agents and humans. It also defines the shared CLI core. |
+| `agent-cli-core` | Shared Go library the three CLIs build from: daemon-token auth, client-side policy, output envelope with untrusted-content marking, audit log and HTTP client. It wraps the daemon's `pkg/client`. |
+| `snow-cli` | `snow`: task-shaped ServiceNow CLI (work items, CMDB lookups) for agents and humans. |
 | `outlook-cli` | `outlook`: read, triage and send mail as the agent's own Entra user, with inbound content marked untrusted and outbound controlled. |
 | `teams-cli` | `teams`: post and read Teams messages as the agent's own Entra user, using polling and no hosted relay. |
 

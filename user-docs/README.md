@@ -5,6 +5,7 @@ for a single tool lives in that tool's own `user-docs/`:
 
 - [agentic-team-w-paperclip](https://github.com/stainedhead/agentic-team-w-paperclip/tree/main/user-docs)
 - [agent-okta-d](https://github.com/stainedhead/agent-okta-d/tree/main/user-docs)
+- [agent-cli-core](https://github.com/stainedhead/agent-cli-core/tree/main/user-docs)
 - [snow-cli](https://github.com/stainedhead/snow-cli/tree/main/user-docs)
 - [outlook-cli](https://github.com/stainedhead/outlook-cli/tree/main/user-docs)
 - [teams-cli](https://github.com/stainedhead/teams-cli/tree/main/user-docs)

@@ -22,13 +22,13 @@ Sub-directory names match the repository names. All five remotes are public. Clo
 | `snow-cli/` | Go | `snow`: ServiceNow CLI (work items, CMDB lookups); defines the shared CLI core | `github.com/stainedhead/snow-cli` | Exists: PRD and scaffold, no code yet |
 | `outlook-cli/` | Go | `outlook`: mail as the agent's own Entra user via Graph | `github.com/stainedhead/outlook-cli` | Exists: PRD and scaffold, no code yet |
 | `teams-cli/` | Go | `teams`: Teams messaging as the agent's own Entra user via Graph | `github.com/stainedhead/teams-cli` | Exists: PRD and scaffold, no code yet |
-| not yet located | Go module | `agent-cli-core`: shared auth/policy/output/audit/httpx packages that `snow`, `outlook` and `teams` are built from (defined in `snow-cli-PRD.md` §5) | none yet | Planned; where it lives (own repo or inside `snow-cli`) is an open question |
+| `agent-cli-core/` | Go library | Shared code `snow`, `outlook` and `teams` build from: daemon-token auth (wraps `agent-okta-d`'s `pkg/client`), policy, output envelope, audit, HTTP client | `github.com/stainedhead/agent-cli-core` | Exists: PRD and scaffold, no code yet |
 
-When a "Planned" repository is created, update this table and the README table in the same change.
+When a repository is added or changes status, update this table and the README table in the same change.
 
 ## How they relate
 ```
-agent-okta-d ──serves tokens──► snow · outlook · teams   (via the daemon's unix socket)
+agent-okta-d ──pkg/client──► agent-cli-core ──auth──► snow · outlook · teams   (daemon's unix socket)
 agent-okta-d ──feeds creds────► aws · git · gh            (stock tools, unmodified)
 snow · outlook · teams ──built from──► agent-cli-core
 agentic-team-w-paperclip images ──run on the agent host──► the daemon and the CLIs
@@ -60,6 +60,7 @@ agentic-team-w-paperclip images ──run on the agent host──► the daemon 
 - Never put credentials, tokens or tenant identifiers in this repository.
 
 ## Current state
-Five repositories exist: `agentic-team-w-paperclip` (built) and four Go repositories that hold a PRD
-and a scaffold but no code yet. The shared `agent-cli-core` module is not created and its location is
-undecided. The root repository contains documentation only.
+Six repositories exist: `agentic-team-w-paperclip` (built) and five Go repositories (`agent-okta-d`,
+`agent-cli-core`, `snow-cli`, `outlook-cli`, `teams-cli`) that hold a PRD and a scaffold but no code yet.
+The dependency order is `agent-okta-d` (`pkg/client`) -> `agent-cli-core` -> the three CLIs. The root
+repository contains documentation only.
