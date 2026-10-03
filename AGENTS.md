@@ -9,7 +9,7 @@ source code, no build and no tests. See [INTENT.md](INTENT.md) for why it exists
 
 Each sub-repository is a **separate git repository** that lives in a sub-directory of this one when
 cloned. They are **not** tracked here: `.gitignore` ignores every top-level directory except an
-explicit allowlist (`.github/`, `docs/`). Do not add submodules, subtrees or copies.
+explicit allowlist (`.github/`, `docs/`, `user-docs/`). Do not add submodules, subtrees or copies.
 
 ## Sub-repositories
 Sub-directory names match the repository names. All five remotes are public. Clone each one you need next to this file:
@@ -43,7 +43,7 @@ agentic-team-w-paperclip images ──run on the agent host──► the daemon 
 - **Commit sub-repository changes in the sub-repository**, never in this root. A change to
   `snow-cli/` is committed and pushed from inside `snow-cli/`.
 - **Only root-level material is committed here:** `README.md`, `INTENT.md`, `AGENTS.md`, `CLAUDE.md`,
-  `.gitignore`, `.github/` and anything under `docs/`. If you add a new top-level directory that
+  `.gitignore`, `.github/` and anything under `docs/` or `user-docs/`. If you add a new top-level directory that
   belongs to this repo, add it to the allowlist in `.gitignore`.
 - **Before committing, check nothing from a sub-repo is staged:** `git ls-files -s` must show no mode
   `160000` entries and no sub-repository paths.
@@ -51,6 +51,12 @@ agentic-team-w-paperclip images ──run on the agent host──► the daemon 
   sub-repository. Give each fact one home.
 - **Keep links honest.** Only link to a remote that exists. For planned repositories write the name
   and status, not a URL.
+- **`user-docs/` rule.** `user-docs/` holds only files that help someone adopt, configure and use the set
+  as a whole (orientation, install order, agent discovery). It is not for design, requirements or process
+  material, and each tool's own usage docs live in that tool's repository. Do not restate those here.
+- **Keep the discovery rule working.** The sample rule in `README.md` and `user-docs/agent-discovery.md`
+  depends on the table above. When a repository is added, split or changes status, update the table, the
+  README table and, if the repository mapping changed, the sample rule in the same change.
 - Never put credentials, tokens or tenant identifiers in this repository.
 
 ## Current state

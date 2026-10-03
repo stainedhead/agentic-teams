@@ -4,6 +4,7 @@
 /*/
 !/.github/
 !/docs/
+!/user-docs/
 
 # OS / editor noise
 .DS_Store
