@@ -52,6 +52,7 @@ changing the content.
 
 The source of truth for what a command does is its repository. For `snow`, `outlook` and `teams` the
 skill is generated from the command tree and published in each release, then copied here. For
-`agent-okta-d` and `agent-cli-core` it is written by hand. The copy here is updated by pull request
-until a way to automate it is chosen: the release workflow's own token cannot write to another
-repository (unconfirmed), so that needs a decision (open item in each PRD).
+`agent-okta-d` and `agent-cli-core` it is written by hand. The copy here is updated by a **manual pull request**
+against this repository. Opening it is part of each tool's release checklist, and a release is not
+complete until it is merged. Automating it is deferred, because the release workflow's own token cannot
+write to another repository (unconfirmed).

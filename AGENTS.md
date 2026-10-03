@@ -62,7 +62,8 @@ agentic-team-w-paperclip images ──run on the agent host──► the daemon 
   repositories require it (SKILL-1..7 in each PRD) and do not keep a copy. Each skill must carry the
   planned/not-installed banner until a release exists, describe only commands the repository's PRD
   defines, and name the version it applies to. Update the skill in the same change cycle as any change
-  to a tool's commands, exit codes or forbidden actions.
+  to a tool's commands, exit codes or forbidden actions. For now skills arrive here by manual pull request
+  from each tool's maintainers; review them against that tool's PRD.
 - Never put credentials, tokens or tenant identifiers in this repository.
 
 ## Current state
