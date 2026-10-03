@@ -64,7 +64,7 @@ The same pipeline shape is required of each Go repository (CI/CD section of each
 - **CI** runs on every pull request and on demand: format, vet, lint, race-enabled tests and a vulnerability
   scan, plus a cross-compile of every release target.
 - **Releases** are semver (`vX.Y.Z`) and are published on PR merge or on demand, as signed artifacts for
-  **macOS Apple silicon**, **Windows via WSL** (the Linux build; there is no native Windows build) and a
+  **macOS Apple silicon**, **Windows via WSL2** (the Linux build; there is no native Windows build) and a
   **Linux container** for AWS (`amd64` and `arm64`).
 - Publishing a release is the whole of "deploy". Rolling a release out to agent hosts or harness images is
   the swarm owner's job.
