@@ -12,8 +12,8 @@ Agents should discover tools, not assume them. Four sources, in order of trust:
    what it can use right now.
 2. **Releases.** A tool's published releases say what could be installed.
 3. **The skill.** [`skills/<repo>.md`](../skills/README.md) in this repository says how to use the tool,
-   what it will refuse, and how to read its output. Adopt it first. It describes the *planned* tool until a
-   release exists and says so.
+   what it will refuse, and how to read its output. Adopt it first. Until a release exists it carries a status
+   banner saying what is built and what is not.
 4. **The repository.** `INTENT.md`, `user-docs/` and the PRD say what the tool is for in depth. They
    describe intent, and a PRD may describe things that do not exist yet.
 
