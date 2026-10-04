@@ -77,7 +77,7 @@ with exit 2; restart the listing without a token.
 |---|---|
 | `1` | General error, including a failing `selftest`; also an unusable audit directory. Do not retry blindly |
 | `2` | Usage: unknown command, missing flag, bad `--since`, invalid page token |
-| `3` | Auth: credential daemon unreachable (**currently always, for network commands**), `reauth_required`, or second 401 |
+| `3` | Auth: credential daemon unreachable, `reauth_required`, or second 401 |
 | `4` | Forbidden: Graph/Exchange 403, or core refused a forbidden host (not an allowed host, plain http) |
 | `5` | Message, draft, attachment or folder not found |
 | `6` | Denied by client policy, including the policy send-rate cap and a policy file/dir that is writable by or owned by the agent user |
