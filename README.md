@@ -88,10 +88,10 @@ These help you adopt and use the set as a whole. Each repository keeps its own `
 
 ## Skills for agents
 
-`skills/` is the one place an agent finds and adopts instructions for the tools in this set: one skill
-document per repository, named `<repo-name>.md`, plus a shared one for the conventions all three CLIs
-follow. See [skills/README.md](skills/README.md) for the index and how to adopt them. Every tool is
-built but unreleased or only partly connected, so each skill says so and tells the agent to check the tool is installed first.
+`skills/` is the one place an agent finds and adopts instructions for tools and runtime capabilities in
+this set: one skill document per applicable repository, named `<repo-name>.md`, plus a shared one for
+the conventions all three CLIs follow. See [skills/README.md](skills/README.md) for the index and how
+to adopt them. Each skill states the capability's actual status and tells the agent what to verify.
 
 | Skill | For |
 |---|---|
@@ -100,6 +100,7 @@ built but unreleased or only partly connected, so each skill says so and tells t
 | [skills/teams-cli.md](skills/teams-cli.md) | Teams messages as the agent's own user with `teams` |
 | [skills/agent-cli-core.md](skills/agent-cli-core.md) | Output envelope, exit codes, untrusted content, policy shared by the three CLIs |
 | [skills/agent-okta-d.md](skills/agent-okta-d.md) | What agents must know and never do on a host running the credential daemon |
+| [skills/agent-team-ready-container.md](skills/agent-team-ready-container.md) | CI candidate tool inventory and runtime installation guidance; no released image yet |
 
 ## Discovery example: a rule for agents
 
@@ -115,12 +116,13 @@ https://github.com/stainedhead/agentic-teams (read its README.md and AGENTS.md f
 what exists; discover it.
 
 - **Find a tool.** Check the host first: `command -v snow outlook teams agent-okta-d`. A tool that is
-  not on PATH is not installed. Do not install, build or reimplement it yourself. Check
+  not on PATH is not installed. Do not install, build or reimplement a missing agentic-teams CLI or daemon yourself. Check
   `gh release list -R stainedhead/<repo>` to see whether a release exists, and tell the user what is
   missing.
 - **Adopt the skill first.** Each tool has a skill document in the root repository's `skills/` folder
   (`skills/<repo>.md`; also read `skills/agent-cli-core.md` for `snow`, `outlook` and `teams`, and
-  `skills/agent-okta-d.md` on a host running the daemon). Fetch it with
+  `skills/agent-okta-d.md` on a host running the daemon). The planned development image has
+  `skills/agent-team-ready-container.md`; its status banner says the CI candidate is not released yet. Fetch a skill with
   `gh api repos/stainedhead/agentic-teams/contents/skills/<repo>.md --jq .content | base64 -d`. Then, if
   you need more, read `INTENT.md` and `user-docs/` in the tool's repository. The PRD is the detailed
   source of truth, and several PRD claims are marked unconfirmed (⚠️); treat them as unverified.
