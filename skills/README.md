@@ -2,7 +2,7 @@
 
 One place for AI agents to find and adopt instructions for using the tools and runtime capabilities
 in this set. Each file is a **skill document** for one repository, named `<repo-name>.md`. The owning
-repositories do not keep their own copy; they maintain the skill here when their capabilities change.
+repositories do not keep their own copy; they publish skill changes here by pull request when their capabilities change.
 
 ## Index
 
@@ -66,3 +66,7 @@ skill is generated from the command tree and published in each release, then cop
 against this repository. Opening it is part of each tool's release checklist, and a release is not
 complete until it is merged. Automating it is deferred, because the release workflow's own token cannot
 write to another repository (unconfirmed).
+
+`agent-team-ready-container` follows this manual pull request process. Its maintainers publish changes
+to [agent-team-ready-container.md](agent-team-ready-container.md) here alongside image changes, after
+checking the skill's tool inventory and installation examples against the image.
