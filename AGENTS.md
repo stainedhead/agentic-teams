@@ -18,7 +18,7 @@ Sub-directory names match the repository names. All seven remotes are public. Cl
 | Directory | Language / kind | Purpose | Remote | Status |
 |---|---|---|---|---|
 | `agentic-team-w-paperclip/` | Dockerfiles, shell, CI, docs | Baseline container images (Hermes, OMP, OpenCode CLI, optional Paperclip) and the docs and templates a swarm owner configures them with | `github.com/stainedhead/agentic-team-w-paperclip` | Exists |
-| `agent-team-ready-container/` | Docker image, docs (planned) | Development toolchain base for the harness images and other agent runtimes | `github.com/stainedhead/agent-team-ready-container` | Repository scaffold on main; no image or PRD yet |
+| `agent-team-ready-container/` | Dockerfile, CI, docs | Development toolchain base for the harness images and other agent runtimes | `github.com/stainedhead/agent-team-ready-container` | First image and PRD merged on main; amd64/arm64 CI passed; not published |
 | `agent-okta-d/` | Go | Credential daemon: Okta OIDC identity root, serves short-lived credentials to stock tools and the CLIs | `github.com/stainedhead/agent-okta-d` | Built, merged on main; v0.1.0 tagged |
 | `snow-cli/` | Go | `snow`: ServiceNow CLI (work items, CMDB lookups); defines the shared CLI core | `github.com/stainedhead/snow-cli` | Built, merged on main; not released |
 | `outlook-cli/` | Go | `outlook`: mail as the agent's own Entra user via Graph | `github.com/stainedhead/outlook-cli` | Built, merged on main; not released |
@@ -32,7 +32,7 @@ When a repository is added or changes status, update this table and the README t
 agent-okta-d ──pkg/client──► agent-cli-core ──auth──► snow · outlook · teams   (daemon's unix socket)
 agent-okta-d ──feeds creds────► aws · git · gh            (stock tools, unmodified)
 snow · outlook · teams ──built from──► agent-cli-core
-agent-team-ready-container ──planned base image──► agentic-team-w-paperclip images
+agent-team-ready-container ──intended base image──► agentic-team-w-paperclip images
 agentic-team-w-paperclip images ──run on the agent host──► the daemon and the CLIs
 ```
 - The agent process and the daemon run as different OS users; the agent never sees a long-lived secret.
@@ -69,7 +69,7 @@ agentic-team-w-paperclip images ──run on the agent host──► the daemon 
 - Never put credentials, tokens or tenant identifiers in this repository.
 
 ## Current state
-Seven repositories exist: `agent-team-ready-container` (documentation scaffold), `agentic-team-w-paperclip` (built) and five Go repositories (`agent-okta-d`,
+Seven repositories exist: `agent-team-ready-container` (CI-tested image source, not published), `agentic-team-w-paperclip` (built) and five Go repositories (`agent-okta-d`,
 `agent-cli-core`, `snow-cli`, `outlook-cli`, `teams-cli`) that are built and merged on `main` but verified only against fakes; only `agent-okta-d` (`v0.1.0`) and
 `agent-cli-core` (to `v0.2.1`) are tagged.
 The dependency order is `agent-okta-d` (`pkg/client`) -> `agent-cli-core` -> the three CLIs. The root
