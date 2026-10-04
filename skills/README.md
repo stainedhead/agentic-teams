@@ -8,10 +8,10 @@ own copy; they are required to keep the one here current (SKILL-1..7 in each PRD
 
 | Skill | Teaches an agent | Status of the tool |
 |---|---|---|
-| [snow-cli.md](snow-cli.md) | `snow`: read and update ServiceNow work items, look up CMDB items | Built, merged on main, not released; daemon not wired (network commands exit 3) |
-| [outlook-cli.md](outlook-cli.md) | `outlook`: read, triage and send mail as its own mailbox | Built, merged on main, not released; daemon not wired (network commands exit 3) |
-| [teams-cli.md](teams-cli.md) | `teams`: post and read Teams messages as its own user | Built, merged on main, not released; daemon not wired (network commands exit 3) |
-| [agent-cli-core.md](agent-cli-core.md) | The conventions all three CLIs share: output envelope, exit codes, untrusted content, policy, retries | Built, v0.1.0 tagged; daemon adapter arrives in v0.2.0 |
+| [snow-cli.md](snow-cli.md) | `snow`: read and update ServiceNow work items, look up CMDB items | Built, merged on main, not released; wired to the daemon via core v0.2.1 (fakes only) |
+| [outlook-cli.md](outlook-cli.md) | `outlook`: read, triage and send mail as its own mailbox | Built, merged on main, not released; wired to the daemon via core v0.2.1 (fakes only) |
+| [teams-cli.md](teams-cli.md) | `teams`: post and read Teams messages as its own user | Built, merged on main, not released; wired to the daemon via core v0.2.1 (fakes only) |
+| [agent-cli-core.md](agent-cli-core.md) | The conventions all three CLIs share: output envelope, exit codes, untrusted content, policy, retries | Built; tagged v0.1.0, v0.2.0, v0.2.1 (daemon adapter in `auth/oktad`) |
 | [agent-okta-d.md](agent-okta-d.md) | What to know, and never do, on a host running the credential daemon | Built, v0.1.0 tagged; verified against fakes only (no real Okta or AWS) |
 
 `agentic-team-w-paperclip` has no skill. It is the runtime an agent lives in, not something an agent
@@ -39,9 +39,9 @@ skill when the tool's version changes.
 
 All five tools are built and merged on their repositories' `main`, but none has been run against a real
 system: every Okta, ServiceNow, Microsoft Graph and AWS behavior has been verified only against fakes.
-Only `agent-okta-d` and `agent-cli-core` have a `v0.1.0` tag; `snow`, `outlook` and `teams` are not
-released. The three CLIs' daemon client is still a stub, so any command that needs a token exits 3 until
-`agent-cli-core` v0.2.0 adds the real adapter and the CLIs pick it up. Each skill carries a status banner
+Tags exist only for `agent-okta-d` (`v0.1.0`) and `agent-cli-core` (`v0.1.0`, `v0.2.0`, `v0.2.1`); `snow`,
+`outlook` and `teams` have no tag or release. The three CLIs are wired to the credential daemon through
+`agent-cli-core` v0.2.1, but that connection has never touched a real daemon. Each skill carries a status banner
 saying so. An agent must confirm a tool is installed and check its version before relying on a skill, and
 must report a missing tool instead of building or reimplementing it. A banner is removed only after a
 release exists and the skill's examples have been run against it.

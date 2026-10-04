@@ -5,11 +5,12 @@ description: Use when asked to read, triage or send email as your own mailbox (y
 
 # outlook: read, triage and send mail as your own mailbox
 
-> **Status: built and merged on main, NOT released.** There is no release or tag (no v0.1.0) for `outlook`.
+> **Status: built and merged on main, NOT released.** There is no release or tag for `outlook`.
 > Its behavior against Microsoft Graph has been verified only against fakes; no real tenant has been
 > exercised, so every Graph shape is an unverified assumption. The connection to the `agent-okta-d` daemon
-> is not wired: the CLI's daemon client is a stub, so every command that needs a token (all network
-> commands) currently exits 3 until agent-cli-core v0.2.0 adds the real adapter. Format of this skill file is
+> is wired through agent-cli-core v0.2.1 (`auth/oktad`) but has only run against fakes, never a real daemon.
+> Socket: env `AGENT_OKTA_D_SOCKET`, else the platform default (`/run/agentd/agentd.sock` on Linux,
+> `/var/run/agentd/agentd.sock` on macOS; the file name is an unconfirmed assumption). Format of this skill file is
 > provisional.
 >
 > Before relying on anything below, run `command -v outlook` and `outlook version`. If `outlook` is missing,
@@ -134,7 +135,7 @@ and are never opened. Marking is a mitigation, not a guarantee: stay alert.
 
 Never ask for, read, print, log or store tokens. There is no token command and no credentials in the
 environment or on disk. The Graph token comes from the `agent-okta-d` daemon (provider `msgraph`); the CLI
-fetches it for you once the daemon adapter lands. If the daemon reports `reauth_required`, a human must run
+fetches it for you. If the daemon reports `reauth_required`, a human must run
 `agent-okta-d enroll msgraph`. Report it to the user; do not attempt it.
 
 ## Errors
@@ -143,7 +144,7 @@ fetches it for you once the daemon adapter lands. If the daemon reports `reauth_
 |---|---|
 | 1 | Report `error.message`; do not retry blindly |
 | 2 / 9 | Fix usage or missing fields (for 9, also a bad policy file: report it), then retry once |
-| 3 | Daemon unreachable: tell the user the `agent-okta-d` service may not be running (in this build the adapter is not wired, so this is expected). `reauth_required`: a human must run `agent-okta-d enroll msgraph`. Do not retry in a loop |
+| 3 | Daemon unreachable: tell the user the `agent-okta-d` service may not be running (the message names the socket). `reauth_required`: a human must run `agent-okta-d enroll msgraph`. Do not retry in a loop |
 | 4 | Server forbids it (or forbidden host). Stop and report the message; no workaround |
 | 5 | Message or folder not found; re-list to confirm the id |
 | 6 | Policy denied (including send-rate cap). Stop and report the hint; no workaround |

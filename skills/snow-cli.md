@@ -5,7 +5,7 @@ description: Use when asked to read or update ServiceNow incidents, requests, ca
 
 # snow (ServiceNow CLI)
 
-> **Status: built and merged on main, NOT released.** There is no release tag (no v0.1.0) for `snow`. Every ServiceNow-facing behavior was verified only against fakes, never a real ServiceNow instance or Okta tenant. The daemon connection is not wired: the agent-mode client is a stub, so any network command that needs a token currently exits 3 (message names the daemon socket) until `agent-cli-core` v0.2.0 adds the real `agent-okta-d` adapter. Before relying on this file, run `command -v snow` and `snow version`. If `snow` is missing, tell the user it is not installed. Do not install it, build it, reimplement it, or call ServiceNow REST yourself. If `snow --help` differs from this file, trust `snow --help` and tell the user. Items marked "unverified" below have not been confirmed against a real instance.
+> **Status: built and merged on main, NOT released.** There is no release or tag for `snow`. Every ServiceNow-facing behavior was verified only against fakes, never a real ServiceNow instance or Okta tenant. The daemon connection is wired through `agent-cli-core` v0.2.1 (`auth/oktad`), but only ever exercised against fakes, never a real daemon. Socket: profile `daemon.socket`, then env `AGENT_OKTA_D_SOCKET`, then the platform default (`/run/agentd/agentd.sock` on Linux, `/var/run/agentd/agentd.sock` on macOS; the file name is an unconfirmed assumption). Before relying on this file, run `command -v snow` and `snow version`. If `snow` is missing, tell the user it is not installed. Do not install it, build it, reimplement it, or call ServiceNow REST yourself. If `snow --help` differs from this file, trust `snow --help` and tell the user. Items marked "unverified" below have not been confirmed against a real instance.
 
 ## When to use
 
@@ -86,7 +86,7 @@ Free text written by other people (`description`, `short_description`, `work_not
 
 ## Credentials
 
-Never ask for, read, print, log or store tokens or ServiceNow secrets. There is no token command. In agent mode auth is meant to come from the `agent-okta-d` daemon, but that adapter is not wired yet, so token-needing commands exit 3 today. On exit 3, report to a human; do not look for another credential source.
+Never ask for, read, print, log or store tokens or ServiceNow secrets. There is no token command. In agent mode auth comes from the `agent-okta-d` daemon. Daemon unreachable, `reauth_required`, revoked, not configured or unauthorized all exit 3 (the message names the socket or the fix); a degraded daemon exits 8 with a "retry in Ns" hint; a cancelled or timed-out caller context exits 1. On exit 3, report to a human; do not look for another credential source.
 
 ## Errors
 
@@ -94,7 +94,7 @@ Never ask for, read, print, log or store tokens or ServiceNow secrets. There is 
 |---|---|---|
 | 1 | General error, audit log failure, failed `selftest` row | Read the message. After a write that reports the outcome record could not be written, the write may have happened: check ServiceNow before retrying. |
 | 2 | Usage: bad command line, config, or no policy | Fix the arguments or config; see `snow <verb> --help`. |
-| 3 | Auth failed or unavailable: second 401, `reauth_required`, no credential, or the daemon is unreachable (message names the socket). Currently the expected result of any network command in agent mode. | Stop. Report the message to a human. Do not retry in a loop or look for other credentials. |
+| 3 | Auth failed or unavailable: second 401, `reauth_required`, no credential, or the daemon is unreachable (message names the socket). | Stop. Report the message to a human. Do not retry in a loop or look for other credentials. |
 | 4 | Forbidden by ServiceNow (403/ACL), or a request to a host other than `instance.host` | Final. Report the error code. Do not work around it. |
 | 5 | Not found; also what a record your identity cannot see usually looks like (unverified) | Check the number, sys_id or query; do not guess records. |
 | 6 | Denied by client policy, including impact/urgency 1, `incident resolve`, `--policy`/`--trace`/`auth login` on an agent profile, and an exceeded rate limit | Final. Report the message and hint; ask a human. |

@@ -22,7 +22,7 @@ Sub-directory names match the repository names. All five remotes are public. Clo
 | `snow-cli/` | Go | `snow`: ServiceNow CLI (work items, CMDB lookups); defines the shared CLI core | `github.com/stainedhead/snow-cli` | Built, merged on main; not released |
 | `outlook-cli/` | Go | `outlook`: mail as the agent's own Entra user via Graph | `github.com/stainedhead/outlook-cli` | Built, merged on main; not released |
 | `teams-cli/` | Go | `teams`: Teams messaging as the agent's own Entra user via Graph | `github.com/stainedhead/teams-cli` | Built, merged on main; not released |
-| `agent-cli-core/` | Go library | Shared code `snow`, `outlook` and `teams` build from: daemon-token auth (wraps `agent-okta-d`'s `pkg/client`), policy, output envelope, audit, HTTP client | `github.com/stainedhead/agent-cli-core` | Built, merged on main; v0.1.0 tagged |
+| `agent-cli-core/` | Go library | Shared code `snow`, `outlook` and `teams` build from: daemon-token auth (wraps `agent-okta-d`'s `pkg/client`), policy, output envelope, audit, HTTP client | `github.com/stainedhead/agent-cli-core` | Built, merged on main; tagged to v0.2.1 |
 
 When a repository is added or changes status, update this table and the README table in the same change.
 
@@ -68,7 +68,7 @@ agentic-team-w-paperclip images ──run on the agent host──► the daemon 
 
 ## Current state
 Six repositories exist: `agentic-team-w-paperclip` (built) and five Go repositories (`agent-okta-d`,
-`agent-cli-core`, `snow-cli`, `outlook-cli`, `teams-cli`) that are built and merged on `main` but verified only against fakes; only `agent-okta-d` and
-`agent-cli-core` have a `v0.1.0` tag.
+`agent-cli-core`, `snow-cli`, `outlook-cli`, `teams-cli`) that are built and merged on `main` but verified only against fakes; only `agent-okta-d` (`v0.1.0`) and
+`agent-cli-core` (to `v0.2.1`) are tagged.
 The dependency order is `agent-okta-d` (`pkg/client`) -> `agent-cli-core` -> the three CLIs. The root
 repository contains documentation only.

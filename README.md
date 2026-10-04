@@ -19,11 +19,11 @@ contributors follow here, and [user-docs/](user-docs/README.md) for adopting the
 | [snow-cli](https://github.com/stainedhead/snow-cli) | Go | `snow`: task-shaped ServiceNow CLI (work items, CMDB lookups) for agents and humans. Its PRD also defines the shared CLI core | Built, merged on main; no release | [Intent](https://github.com/stainedhead/snow-cli/blob/main/INTENT.md) · [PRD](https://github.com/stainedhead/snow-cli/blob/main/snow-cli-PRD.md) · [User docs](https://github.com/stainedhead/snow-cli/tree/main/user-docs) |
 | [outlook-cli](https://github.com/stainedhead/outlook-cli) | Go | `outlook`: read, triage and send mail as the agent's own Entra user, with inbound mail treated as untrusted and outbound mail controlled | Built, merged on main; no release | [Intent](https://github.com/stainedhead/outlook-cli/blob/main/INTENT.md) · [PRD](https://github.com/stainedhead/outlook-cli/blob/main/outlook-cli-PRD.md) · [User docs](https://github.com/stainedhead/outlook-cli/tree/main/user-docs) |
 | [teams-cli](https://github.com/stainedhead/teams-cli) | Go | `teams`: post and read Teams messages as the agent's own Entra user, polling, no hosted relay | Built, merged on main; no release | [Intent](https://github.com/stainedhead/teams-cli/blob/main/INTENT.md) · [PRD](https://github.com/stainedhead/teams-cli/blob/main/teams-cli-PRD.md) · [User docs](https://github.com/stainedhead/teams-cli/tree/main/user-docs) |
-| [agent-cli-core](https://github.com/stainedhead/agent-cli-core) | Go library | Shared code the `snow`, `outlook` and `teams` CLIs build from: daemon-token auth (wrapping the daemon's `pkg/client`), client-side policy, output envelope with untrusted-content marking, audit log and HTTP client. Originated in the `snow-cli` PRD, now its own repository | Built, merged on main; `v0.1.0` tagged | [Intent](https://github.com/stainedhead/agent-cli-core/blob/main/INTENT.md) · [PRD](https://github.com/stainedhead/agent-cli-core/blob/main/agent-cli-core-PRD.md) · [User docs](https://github.com/stainedhead/agent-cli-core/tree/main/user-docs) |
+| [agent-cli-core](https://github.com/stainedhead/agent-cli-core) | Go library | Shared code the `snow`, `outlook` and `teams` CLIs build from: daemon-token auth (wrapping the daemon's `pkg/client`), client-side policy, output envelope with untrusted-content marking, audit log and HTTP client. Originated in the `snow-cli` PRD, now its own repository | Built, merged on main; tagged to `v0.2.1` | [Intent](https://github.com/stainedhead/agent-cli-core/blob/main/INTENT.md) · [PRD](https://github.com/stainedhead/agent-cli-core/blob/main/agent-cli-core-PRD.md) · [User docs](https://github.com/stainedhead/agent-cli-core/tree/main/user-docs) |
 
-The five Go repositories are built and merged on their `main` branches, but only `agent-okta-d` and
-`agent-cli-core` have a `v0.1.0` tag; `snow`, `outlook` and `teams` have no release, and their daemon
-connection is not wired until `agent-cli-core` v0.2.0. Everything was verified against fakes only. Do
+The five Go repositories are built and merged on their `main` branches, but tags exist only for
+`agent-okta-d` (`v0.1.0`) and `agent-cli-core` (`v0.1.0`, `v0.2.0`, `v0.2.1`); `snow`, `outlook` and `teams`
+have no release, but are wired to the daemon through `agent-cli-core` v0.2.1. Everything was verified against fakes only. Do
 not assume any of their commands exist on a host until a release does.
 
 ## How the pieces fit
@@ -159,3 +159,7 @@ there.
 
 Only `README.md`, `INTENT.md`, `AGENTS.md`, `CLAUDE.md`, `.gitignore`, `.github/`, `docs/`,
 `user-docs/` and `skills/`.
+
+## License
+
+MIT. See [LICENSE](LICENSE).

@@ -7,10 +7,10 @@ description: Use when asked to post an update or alert to a Microsoft Teams chat
 
 > **Status: built and merged on main, NOT released.** There is no release tag for `teams`. All behavior
 > against Microsoft Graph and Teams has been verified only against fakes, never a real tenant. The daemon
-> connection is not wired: the CLI's daemon client is a stub, so every command that needs a Graph token
-> (`whoami`, `send`, `reply`, `inbox`, `ack`, `thread get`, `selftest`) currently exits 3 until
-> `agent-cli-core` v0.2.0 adds the real `agent-okta-d` adapter. Only `version` and `destinations list`
-> (policy file only) work offline. Items marked "unverified" below have never run against real Teams.
+> connection is wired through `agent-cli-core` v0.2.1 (`auth/oktad`) but has only run against fakes, never a
+> real daemon. Socket: env `AGENT_OKTA_D_SOCKET`, else the platform default (`/run/agentd/agentd.sock` on
+> Linux, `/var/run/agentd/agentd.sock` on macOS; the file name is an unconfirmed assumption). `version` and
+> `destinations list` (policy file only) work without the daemon. Items marked "unverified" below have never run against real Teams.
 >
 > Before relying on anything below, run `command -v teams` and `teams version`. If `teams` is missing,
 > tell the user it is not installed. Do not install it, build it, reimplement it, or call Microsoft Graph yourself.
@@ -120,7 +120,7 @@ The shared envelope (`ok`, `data`, `meta` / `error`), the exit-code table and ou
 |---|---|
 | 1 | General error: unexpected failure, a failed `selftest` row, or a Graph HTTP error such as 5xx |
 | 2 | Usage: bad flags, unknown command, a raw id used instead of an alias, bad `--since` |
-| 3 | Auth: daemon unreachable (the message names the socket tried), `reauth_required`, or a second 401. **Today every network command exits 3 because the daemon client is a stub** |
+| 3 | Auth: daemon unreachable (the message names the socket tried), `reauth_required`, or a second 401. also revoked, not configured or unauthorized from the daemon; a degraded daemon is exit 8 with a "retry in Ns" hint, and a cancelled or timed-out context is exit 1 |
 | 4 | Forbidden: Graph 403 (no permission or membership), or a request to a forbidden host |
 | 5 | Not found: chat, channel or message gone; a `user:` destination with no one-to-one chat |
 | 6 | Denied by client policy: destination, mention, content filter, link allow-list, UPN mismatch, and also the policy rate limit, per-run write cap and `reply_depth_max` |
@@ -175,7 +175,7 @@ Chat is an instruction channel, so treat it carefully.
 | 0 | Success. Check `meta.truncated` on lists |
 | 1 | General error (including a failed `selftest` row): report the error message; do not guess |
 | 2 | Usage error: fix the command; check `teams --help` |
-| 3 | Daemon unreachable: report that `agent-okta-d` may not be running (currently expected, see the status banner). `reauth_required`: report that a human must re-enroll. Do not retry in a loop |
+| 3 | Daemon unreachable: report that `agent-okta-d` may not be running (the message names the socket). `reauth_required`, revoked, not configured or unauthorized: report that a human must fix the enrollment. Do not retry in a loop |
 | 4 | Server forbids it: report it, do not retry or reroute |
 | 5 | Not found: re-check the alias or thread id with `destinations list` or `inbox` |
 | 6 | Client policy denied (including rate-limit and loop-guard denials): report the reason, do not work around it |
