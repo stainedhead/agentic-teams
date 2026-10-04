@@ -5,7 +5,7 @@ description: Use inside a released agent-team-ready-container image to discover 
 
 # Development container tools
 
-> **Status: CI-verified candidate, not released. Applies to no published image version yet.** The [first-image PR](https://github.com/stainedhead/agent-team-ready-container/pull/1) built on `linux/amd64` and `linux/arm64`; its [CI run](https://github.com/stainedhead/agent-team-ready-container/actions/runs/37215901006) passed toolchain, browser and runtime installation tests. The image is not published, and the harness and external-browser isolation gates remain open. Use this inventory only when you know you are running that candidate or a later verified release.
+> **Status: CI-verified candidate, not released. Applies to no published image version yet.** The [first-image PR](https://github.com/stainedhead/agent-team-ready-container/pull/1) built on `linux/amd64` and `linux/arm64`; its [latest CI run](https://github.com/stainedhead/agent-team-ready-container/actions/runs/37219853532) passed toolchain, runtime installation and sandboxed browser tests. The image is not published, and the harness and external-browser deployment gates remain open. Use this inventory only when you know you are running that candidate or a later verified release.
 
 The image is a development base, without a harness entrypoint. Check the running environment before relying on a tool:
 
@@ -46,6 +46,6 @@ Create `.venv` first with `python3 -m venv .venv`. npm, pnpm, Go modules, Maven,
 
 ## Browser use
 
-Playwright's matching Chromium launched and loaded a local page in both CI architectures. Use it for application tests. External-site research must run in a separate browser container without the agent workspace, credential socket or cloud metadata access. The isolation and browser sandbox have not yet been verified on deployment targets; do not use the credential-bearing task container to visit untrusted sites on the strength of this skill.
+Playwright's matching Chromium launched and loaded a local page in both CI architectures. Use it for application tests. CI also verified that Chromium can launch with its sandbox enabled and a renderer in a separate user namespace when the image is run with the [version-matched seccomp profile](https://github.com/stainedhead/agent-team-ready-container/blob/a3930ffb826b3b179d4051451596fe5a15067037/config/playwright-seccomp.json) and documented container options. External-site research must run in a separate browser container without the agent workspace, credential socket or cloud metadata access. The actual research service and AWS isolation have not yet been verified; do not use the credential-bearing task container to visit untrusted sites on the strength of this skill.
 
 If a tool is missing, identify the actual image and version, then use the appropriate package manager or report the missing prerequisite. Do not assume this candidate skill applies to a different host or an older Paperclip image.
