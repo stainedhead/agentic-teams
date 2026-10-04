@@ -14,6 +14,7 @@ otherwise track the repositories it describes.
 | Repository | What it is for |
 |---|---|
 | `agentic-team-w-paperclip` | Baseline container images and docs for an agent swarm: Hermes, OMP and OpenCode harnesses, plus Paperclip as the orchestration and collaboration plane. |
+| `agent-team-ready-container` | Planned development toolchain base for the harness images and other agent runtimes. Its repository is a documentation scaffold; no image exists yet. |
 | `agent-okta-d` | A credential daemon beside each agent host. Okta OIDC is the identity root. It serves short-lived credentials to stock tools (`aws`, `git`, `gh`) and to the custom CLIs, and the agent never reads a long-lived secret. |
 | `agent-cli-core` | Shared Go library the three CLIs build from: daemon-token auth, client-side policy, output envelope with untrusted-content marking, audit log and HTTP client. It wraps the daemon's `pkg/client`. |
 | `snow-cli` | `snow`: task-shaped ServiceNow CLI (work items, CMDB lookups) for agents and humans. |

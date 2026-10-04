@@ -15,6 +15,7 @@ contributors follow here, and [user-docs/](user-docs/README.md) for adopting the
 | Repository | Language | What it is | Status | Docs |
 |---|---|---|---|---|
 | [agentic-team-w-paperclip](https://github.com/stainedhead/agentic-team-w-paperclip) | Dockerfiles, shell, CI | Baseline container images carrying the Hermes, OMP and OpenCode harnesses, with Paperclip as the orchestration plane, plus the templates and docs to configure and deploy them | Built; images publish to GHCR | [Intent](https://github.com/stainedhead/agentic-team-w-paperclip/blob/main/INTENT.md) · [User docs](https://github.com/stainedhead/agentic-team-w-paperclip/tree/main/user-docs) |
+| [agent-team-ready-container](https://github.com/stainedhead/agent-team-ready-container) | Docker image (planned) | Development toolchain base intended for the harness images and other agent runtimes | Repository scaffold on main; no image or PRD yet | [Intent](https://github.com/stainedhead/agent-team-ready-container/blob/main/INTENT.md) |
 | [agent-okta-d](https://github.com/stainedhead/agent-okta-d) | Go | Credential daemon beside each agent host. Okta OIDC is the identity root; it turns short-lived Okta tokens into the credentials that `aws`, `git`, `gh` and the CLIs below already understand, so the agent never holds a long-lived secret | Built, merged on main; `v0.1.0` tagged | [Intent](https://github.com/stainedhead/agent-okta-d/blob/main/INTENT.md) · [PRD](https://github.com/stainedhead/agent-okta-d/blob/main/agent-okta-d-PRD.md) · [User docs](https://github.com/stainedhead/agent-okta-d/tree/main/user-docs) |
 | [snow-cli](https://github.com/stainedhead/snow-cli) | Go | `snow`: task-shaped ServiceNow CLI (work items, CMDB lookups) for agents and humans. Its PRD also defines the shared CLI core | Built, merged on main; no release | [Intent](https://github.com/stainedhead/snow-cli/blob/main/INTENT.md) · [PRD](https://github.com/stainedhead/snow-cli/blob/main/snow-cli-PRD.md) · [User docs](https://github.com/stainedhead/snow-cli/tree/main/user-docs) |
 | [outlook-cli](https://github.com/stainedhead/outlook-cli) | Go | `outlook`: read, triage and send mail as the agent's own Entra user, with inbound mail treated as untrusted and outbound mail controlled | Built, merged on main; no release | [Intent](https://github.com/stainedhead/outlook-cli/blob/main/INTENT.md) · [PRD](https://github.com/stainedhead/outlook-cli/blob/main/outlook-cli-PRD.md) · [User docs](https://github.com/stainedhead/outlook-cli/tree/main/user-docs) |
@@ -30,6 +31,7 @@ not assume any of their commands exist on a host until a release does.
 
 ```mermaid
 flowchart LR
+    BASE["agent-team-ready-container<br/>planned development base"]
     subgraph HOST["Agent host (container from agentic-team-w-paperclip)"]
         AGENT["Agent harness<br/>Hermes · OMP · OpenCode"]
         CLIS["snow · outlook · teams<br/>(built from agent-cli-core)"]
@@ -39,6 +41,7 @@ flowchart LR
     OKTA["Okta OIDC"]
     SYS["AWS · GitHub · ServiceNow<br/>Microsoft 365 · Atlassian"]
 
+    BASE -. "future base" .-> HOST
     AGENT --> CLIS
     AGENT --> STOCK
     CLIS -- "short-lived token" --> DAEMON
@@ -122,8 +125,8 @@ what exists; discover it.
   you need more, read `INTENT.md` and `user-docs/` in the tool's repository. The PRD is the detailed
   source of truth, and several PRD claims are marked unconfirmed (⚠️); treat them as unverified.
 - **Which repository.** ServiceNow work: `snow-cli`. Email: `outlook-cli`. Teams chat: `teams-cli`.
-  Shared CLI library code (policy, output envelope, audit): `agent-cli-core`. Credentials and Okta: `agent-okta-d`. Runtime images and deployment recipes:
-  `agentic-team-w-paperclip`. AWS, GitHub and git use the stock `aws`, `gh` and `git`.
+  Shared CLI library code (policy, output envelope, audit): `agent-cli-core`. Credentials and Okta: `agent-okta-d`. Development base image: `agent-team-ready-container` (scaffold only).
+  Harness images and deployment recipes: `agentic-team-w-paperclip`. AWS, GitHub and git use the stock `aws`, `gh` and `git` when installed.
 - **Credentials are not yours to handle.** Never ask for, read, print or store a token, key or
   password. Use the tools as installed; credentials arrive through `agent-okta-d`. If a command reports
   `reauth_required` or a permission error, stop and report it. Do not work around it.
@@ -149,6 +152,7 @@ repository's `.gitignore` already ignores:
 git clone https://github.com/stainedhead/agentic-teams.git
 cd agentic-teams
 git clone https://github.com/stainedhead/agentic-team-w-paperclip.git
+git clone https://github.com/stainedhead/agent-team-ready-container.git
 git clone https://github.com/stainedhead/agent-okta-d.git   # likewise agent-cli-core, snow-cli, outlook-cli, teams-cli
 ```
 
