@@ -100,7 +100,7 @@ to adopt them. Each skill states the capability's actual status and tells the ag
 | [skills/teams-cli.md](skills/teams-cli.md) | Teams messages as the agent's own user with `teams` |
 | [skills/agent-cli-core.md](skills/agent-cli-core.md) | Output envelope, exit codes, untrusted content, policy shared by the three CLIs |
 | [skills/agent-okta-d.md](skills/agent-okta-d.md) | What agents must know and never do on a host running the credential daemon |
-| [skills/agent-team-ready-container.md](skills/agent-team-ready-container.md) | Planned inventory of the development image and how agents add tooling while running |
+| [skills/agent-team-ready-container.md](skills/agent-team-ready-container.md) | CI candidate tool inventory and runtime installation guidance; no released image yet |
 
 ## Discovery example: a rule for agents
 
@@ -122,7 +122,7 @@ what exists; discover it.
 - **Adopt the skill first.** Each tool has a skill document in the root repository's `skills/` folder
   (`skills/<repo>.md`; also read `skills/agent-cli-core.md` for `snow`, `outlook` and `teams`, and
   `skills/agent-okta-d.md` on a host running the daemon). The planned development image has
-  `skills/agent-team-ready-container.md`; its status banner says there is no image yet. Fetch a skill with
+  `skills/agent-team-ready-container.md`; its status banner says the CI candidate is not released yet. Fetch a skill with
   `gh api repos/stainedhead/agentic-teams/contents/skills/<repo>.md --jq .content | base64 -d`. Then, if
   you need more, read `INTENT.md` and `user-docs/` in the tool's repository. The PRD is the detailed
   source of truth, and several PRD claims are marked unconfirmed (⚠️); treat them as unverified.
