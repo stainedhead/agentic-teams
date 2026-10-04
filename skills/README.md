@@ -8,11 +8,11 @@ own copy; they are required to keep the one here current (SKILL-1..7 in each PRD
 
 | Skill | Teaches an agent | Status of the tool |
 |---|---|---|
-| [snow-cli.md](snow-cli.md) | `snow`: read and update ServiceNow work items, look up CMDB items | Planned: PRD and scaffold, no release |
-| [outlook-cli.md](outlook-cli.md) | `outlook`: read, triage and send mail as its own mailbox | Planned: PRD and scaffold, no release |
-| [teams-cli.md](teams-cli.md) | `teams`: post and read Teams messages as its own user | Planned: PRD and scaffold, no release |
-| [agent-cli-core.md](agent-cli-core.md) | The conventions all three CLIs share: output envelope, exit codes, untrusted content, policy, retries | Planned: library, no release |
-| [agent-okta-d.md](agent-okta-d.md) | What to know, and never do, on a host running the credential daemon | Planned: PRD and scaffold, no release |
+| [snow-cli.md](snow-cli.md) | `snow`: read and update ServiceNow work items, look up CMDB items | Built, merged on main, not released; wired to the daemon via core v0.2.1 (fakes only) |
+| [outlook-cli.md](outlook-cli.md) | `outlook`: read, triage and send mail as its own mailbox | Built, merged on main, not released; wired to the daemon via core v0.2.1 (fakes only) |
+| [teams-cli.md](teams-cli.md) | `teams`: post and read Teams messages as its own user | Built, merged on main, not released; wired to the daemon via core v0.2.1 (fakes only) |
+| [agent-cli-core.md](agent-cli-core.md) | The conventions all three CLIs share: output envelope, exit codes, untrusted content, policy, retries | Built; tagged v0.1.0, v0.2.0, v0.2.1 (daemon adapter in `auth/oktad`) |
+| [agent-okta-d.md](agent-okta-d.md) | What to know, and never do, on a host running the credential daemon | Built, v0.1.0 tagged; verified against fakes only (no real Okta or AWS) |
 
 `agentic-team-w-paperclip` has no skill. It is the runtime an agent lives in, not something an agent
 calls; its docs are for the people who deploy it.
@@ -37,10 +37,14 @@ skill when the tool's version changes.
 
 ## Be honest about availability
 
-Every tool here is still a draft PRD with no code and no release. Each skill carries a banner saying so,
-and describes the *planned* command surface. An agent must confirm a tool is installed and check its
-version before relying on a skill, and must report a missing tool instead of building or reimplementing
-it. A banner is removed only after a release exists and the skill's examples have been run against it.
+All five tools are built and merged on their repositories' `main`, but none has been run against a real
+system: every Okta, ServiceNow, Microsoft Graph and AWS behavior has been verified only against fakes.
+Tags exist only for `agent-okta-d` (`v0.1.0`) and `agent-cli-core` (`v0.1.0`, `v0.2.0`, `v0.2.1`); `snow`,
+`outlook` and `teams` have no tag or release. The three CLIs are wired to the credential daemon through
+`agent-cli-core` v0.2.1, but that connection has never touched a real daemon. Each skill carries a status banner
+saying so. An agent must confirm a tool is installed and check its version before relying on a skill, and
+must report a missing tool instead of building or reimplementing it. A banner is removed only after a
+release exists and the skill's examples have been run against it.
 
 ## Format
 

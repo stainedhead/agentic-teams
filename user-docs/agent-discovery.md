@@ -12,8 +12,8 @@ Agents should discover tools, not assume them. Four sources, in order of trust:
    what it can use right now.
 2. **Releases.** A tool's published releases say what could be installed.
 3. **The skill.** [`skills/<repo>.md`](../skills/README.md) in this repository says how to use the tool,
-   what it will refuse, and how to read its output. Adopt it first. It describes the *planned* tool until a
-   release exists and says so.
+   what it will refuse, and how to read its output. Adopt it first. Until a release exists it carries a status
+   banner saying what is built and what is not.
 4. **The repository.** `INTENT.md`, `user-docs/` and the PRD say what the tool is for in depth. They
    describe intent, and a PRD may describe things that do not exist yet.
 
@@ -23,7 +23,7 @@ Agents should discover tools, not assume them. Four sources, in order of trust:
 |---|---|
 | Point at the root repository | One stable place that lists every repository and its status, so the rule does not need updating when a repository is added. |
 | `command -v snow outlook teams agent-okta-d` | Detects what is installed. The agent must not conclude a tool exists from its documentation alone. |
-| `gh release list -R stainedhead/<repo>` | Tells the agent, and the user, whether a release exists to be installed. Today none do. |
+| `gh release list -R stainedhead/<repo>` | Tells the agent, and the user, whether a release exists to be installed. Today only `agent-okta-d` and `agent-cli-core` have tags; the three CLIs have none. |
 | Adopt the skill from `skills/` first | One short, agent-readable document per tool, kept in one place. `INTENT.md` and `user-docs/` come next; the PRD is long and partly unconfirmed. |
 | The "which repository" mapping | Saves a search (shared CLI code lives in `agent-cli-core`). Update it if a repository is added or split. |
 | Credentials are not yours to handle | The set exists so agents never hold a long-lived secret. An agent that asks for or prints a token defeats it. |

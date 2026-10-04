@@ -8,7 +8,7 @@ beside agents, or a contributor to one of the tools.
 | Repository | Today |
 |---|---|
 | `agentic-team-w-paperclip` | Built. Container images publish to GHCR, with configuration docs, templates and user docs. |
-| `agent-okta-d`, `agent-cli-core`, `snow-cli`, `outlook-cli`, `teams-cli` | A draft PRD, an `INTENT.md` and a scaffold. No code and no release yet. Build order: `agent-okta-d` (`pkg/client`) -> `agent-cli-core` -> the three CLIs. |
+| `agent-okta-d`, `agent-cli-core`, `snow-cli`, `outlook-cli`, `teams-cli` | Built and merged on `main`, verified against fakes only. Only `agent-okta-d` (`v0.1.0`) and `agent-cli-core` (to `v0.2.1`) are tagged; the three CLIs are unreleased but wired to the daemon through `agent-cli-core` v0.2.1. Build order: `agent-okta-d` (`pkg/client`) -> `agent-cli-core` -> the three CLIs. |
 
 You can deploy the harness images now. The credential daemon and CLIs are designs you can review and
 challenge, not tools you can install.

@@ -18,11 +18,11 @@ Sub-directory names match the repository names. All five remotes are public. Clo
 | Directory | Language / kind | Purpose | Remote | Status |
 |---|---|---|---|---|
 | `agentic-team-w-paperclip/` | Dockerfiles, shell, CI, docs | Baseline container images (Hermes, OMP, OpenCode CLI, optional Paperclip) and the docs and templates a swarm owner configures them with | `github.com/stainedhead/agentic-team-w-paperclip` | Exists |
-| `agent-okta-d/` | Go | Credential daemon: Okta OIDC identity root, serves short-lived credentials to stock tools and the CLIs | `github.com/stainedhead/agent-okta-d` | Exists: PRD and scaffold, no code yet |
-| `snow-cli/` | Go | `snow`: ServiceNow CLI (work items, CMDB lookups); defines the shared CLI core | `github.com/stainedhead/snow-cli` | Exists: PRD and scaffold, no code yet |
-| `outlook-cli/` | Go | `outlook`: mail as the agent's own Entra user via Graph | `github.com/stainedhead/outlook-cli` | Exists: PRD and scaffold, no code yet |
-| `teams-cli/` | Go | `teams`: Teams messaging as the agent's own Entra user via Graph | `github.com/stainedhead/teams-cli` | Exists: PRD and scaffold, no code yet |
-| `agent-cli-core/` | Go library | Shared code `snow`, `outlook` and `teams` build from: daemon-token auth (wraps `agent-okta-d`'s `pkg/client`), policy, output envelope, audit, HTTP client | `github.com/stainedhead/agent-cli-core` | Exists: PRD and scaffold, no code yet |
+| `agent-okta-d/` | Go | Credential daemon: Okta OIDC identity root, serves short-lived credentials to stock tools and the CLIs | `github.com/stainedhead/agent-okta-d` | Built, merged on main; v0.1.0 tagged |
+| `snow-cli/` | Go | `snow`: ServiceNow CLI (work items, CMDB lookups); defines the shared CLI core | `github.com/stainedhead/snow-cli` | Built, merged on main; not released |
+| `outlook-cli/` | Go | `outlook`: mail as the agent's own Entra user via Graph | `github.com/stainedhead/outlook-cli` | Built, merged on main; not released |
+| `teams-cli/` | Go | `teams`: Teams messaging as the agent's own Entra user via Graph | `github.com/stainedhead/teams-cli` | Built, merged on main; not released |
+| `agent-cli-core/` | Go library | Shared code `snow`, `outlook` and `teams` build from: daemon-token auth (wraps `agent-okta-d`'s `pkg/client`), policy, output envelope, audit, HTTP client | `github.com/stainedhead/agent-cli-core` | Built, merged on main; tagged to v0.2.1 |
 
 When a repository is added or changes status, update this table and the README table in the same change.
 
@@ -59,15 +59,16 @@ agentic-team-w-paperclip images ──run on the agent host──► the daemon 
   README table and, if the repository mapping changed, the sample rule in the same change.
 - **`skills/` rule.** `skills/` holds the agent skill documents, one file per repository named
   `<repo-name>.md` (plus the shared `agent-cli-core.md`). It is the only home for them: the tool
-  repositories require it (SKILL-1..7 in each PRD) and do not keep a copy. Each skill must carry the
-  planned/not-installed banner until a release exists, describe only commands the repository's PRD
-  defines, and name the version it applies to. Update the skill in the same change cycle as any change
+  repositories require it (SKILL-1..7 in each PRD) and do not keep a copy. Each skill must carry an honest
+  status banner until a release exists and its examples have run against it, describe only commands the
+  tool really has, and name the version it applies to. Update the skill in the same change cycle as any change
   to a tool's commands, exit codes or forbidden actions. For now skills arrive here by manual pull request
-  from each tool's maintainers; review them against that tool's PRD.
+  from each tool's maintainers; review them against that tool's code and `--help`.
 - Never put credentials, tokens or tenant identifiers in this repository.
 
 ## Current state
 Six repositories exist: `agentic-team-w-paperclip` (built) and five Go repositories (`agent-okta-d`,
-`agent-cli-core`, `snow-cli`, `outlook-cli`, `teams-cli`) that hold a PRD and a scaffold but no code yet.
+`agent-cli-core`, `snow-cli`, `outlook-cli`, `teams-cli`) that are built and merged on `main` but verified only against fakes; only `agent-okta-d` (`v0.1.0`) and
+`agent-cli-core` (to `v0.2.1`) are tagged.
 The dependency order is `agent-okta-d` (`pkg/client`) -> `agent-cli-core` -> the three CLIs. The root
 repository contains documentation only.
