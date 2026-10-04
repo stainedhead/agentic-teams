@@ -76,7 +76,7 @@ thread_id, deduplicated, dry_run, findings}`.
 `agent-cli-core` has no idempotency-key helper and Graph has no idempotency key for chat sends, so `teams`
 keeps its own local send ledger in its state directory, keyed by `--idempotency-key` (1 to 128 characters of
 `A-Za-z0-9._:-`):
-- same key, same message, earlier send succeeded: returns the recorded result with `deduplicated: true`, posts nothing;
+- same key, same message, earlier send succeeded: returns the recorded result with `deduplicated: true`, posts nothing, even when a rate or reply-depth limit is now full;
 - same key, different message: exit 7;
 - same key where the earlier attempt may or may not have posted (timeout, 5xx): exit 7. Do not retry blindly;
   look in Teams or ask a human. The optional marker scan (`send.marker_scan`, default off, unverified) is built but not enabled by default;
