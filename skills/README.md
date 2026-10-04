@@ -1,8 +1,8 @@
 # Skills
 
-One place for AI agents to find and adopt instructions for using the tools in this set. Each file is a
-**skill document** for one repository, named `<repo-name>.md`. The tool repositories do not keep their
-own copy; they are required to keep the one here current (SKILL-1..7 in each PRD).
+One place for AI agents to find and adopt instructions for using the tools and runtime capabilities
+in this set. Each file is a **skill document** for one repository, named `<repo-name>.md`. The owning
+repositories do not keep their own copy; they maintain the skill here when their capabilities change.
 
 ## Index
 
@@ -13,9 +13,12 @@ own copy; they are required to keep the one here current (SKILL-1..7 in each PRD
 | [teams-cli.md](teams-cli.md) | `teams`: post and read Teams messages as its own user | Built, merged on main, not released; wired to the daemon via core v0.2.1 (fakes only) |
 | [agent-cli-core.md](agent-cli-core.md) | The conventions all three CLIs share: output envelope, exit codes, untrusted content, policy, retries | Built; tagged v0.1.0, v0.2.0, v0.2.1 (daemon adapter in `auth/oktad`) |
 | [agent-okta-d.md](agent-okta-d.md) | What to know, and never do, on a host running the credential daemon | Built, v0.1.0 tagged; verified against fakes only (no real Okta or AWS) |
+| [agent-team-ready-container.md](agent-team-ready-container.md) | Discover the development image's installed tools and supported runtime installation paths | Planned; no image or release yet |
 
 `agentic-team-w-paperclip` has no skill. It is the runtime an agent lives in, not something an agent
 calls; its docs are for the people who deploy it.
+The planned development base has a skill because agents will use its package managers and browser
+tooling directly. Its inventory and examples must be verified against the image before use.
 
 ## Adopting a skill
 
@@ -23,6 +26,8 @@ calls; its docs are for the people who deploy it.
    that is not installed is not usable, and its skill says so.
 2. Give the agent the skill for each tool it will use, plus [agent-cli-core.md](agent-cli-core.md) for
    any of the three CLIs and [agent-okta-d.md](agent-okta-d.md) on any host where the daemon runs.
+   When the development base image exists, give agents its skill to discover installed tools and
+   supported package installation paths.
 3. Put the files where your harness reads skills or rules (a skills folder, an `AGENTS.md` reference, a
    Hermes profile), or fetch them at start-up:
 
@@ -37,7 +42,7 @@ skill when the tool's version changes.
 
 ## Be honest about availability
 
-All five tools are built and merged on their repositories' `main`, but none has been run against a real
+The five credential and CLI tools are built and merged on their repositories' `main`, but none has been run against a real
 system: every Okta, ServiceNow, Microsoft Graph and AWS behavior has been verified only against fakes.
 Tags exist only for `agent-okta-d` (`v0.1.0`) and `agent-cli-core` (`v0.1.0`, `v0.2.0`, `v0.2.1`); `snow`,
 `outlook` and `teams` have no tag or release. The three CLIs are wired to the credential daemon through
@@ -45,6 +50,7 @@ Tags exist only for `agent-okta-d` (`v0.1.0`) and `agent-cli-core` (`v0.1.0`, `v
 saying so. An agent must confirm a tool is installed and check its version before relying on a skill, and
 must report a missing tool instead of building or reimplementing it. A banner is removed only after a
 release exists and the skill's examples have been run against it.
+The development base skill also has a status banner: its image and install paths do not exist yet.
 
 ## Format
 

@@ -59,7 +59,7 @@ agentic-team-w-paperclip images ──run on the agent host──► the daemon 
 - **Keep the discovery rule working.** The sample rule in `README.md` and `user-docs/agent-discovery.md`
   depends on the table above. When a repository is added, split or changes status, update the table, the
   README table and, if the repository mapping changed, the sample rule in the same change.
-- **`skills/` rule.** `skills/` holds the agent skill documents for agent-facing tools, named
+- **`skills/` rule.** `skills/` holds the agent skill documents for agent-facing tools and runtime capabilities, named
   `<repo-name>.md` (plus the shared `agent-cli-core.md`). It is the only home for them: the tool
   repositories require it (SKILL-1..7 in each PRD) and do not keep a copy. Each skill must carry an honest
   status banner until a release exists and its examples have run against it, describe only commands the
