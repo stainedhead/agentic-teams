@@ -60,7 +60,8 @@ these verbs exist.
 Every command also accepts `--format json|table|text`, `--output-max-bytes N` and `--offset N`.
 
 Always `--dry-run` a send first; it validates policy and renders the final message (subject prefix, footer)
-without sending. Use `--idempotency-key` on every send, reply and draft send (see Rules).
+without sending or creating a draft, including when external recipients have `draft_only` policy.
+Use `--idempotency-key` on every send, reply and draft send (see Rules).
 
 ## Output and exit codes
 
